@@ -1,0 +1,103 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "test",
+        "description": "test description",
+        "contact": {
+            "email": "darius@matulionis.lt"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/brand": {
+            "get": {
+                "tags": [
+                    "brand"
+                ],
+                "summary": "index brand",
+                "description": "show all brand without relations",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Status values that needed to be considered for filter",
+                        "required": false,
+                        "explode": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "available",
+                            "enum": [
+                                "done",
+                                "pending",
+                                "buy"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "brand"
+                ],
+                "summary": "Store new brand",
+                "description": "store new brand in database and Returns project data",
+                "operationId": "store",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "price",
+                                    "family",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "integer"
+                                    },
+                                    "family": {
+                                        "type": "text"
+                                    },
+                                    "status": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                }
+            }
+        }
+    }
+}
